@@ -1,0 +1,11 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // The site uses its own email+password login (not Firebase Auth),
+    // so Firestore cannot tell members apart. These rules allow the
+    // site's collections only. Tighten later by moving to Firebase Auth.
+    match /{col}/{doc} {
+      allow read, write: if col in ['users','posts','announcements','sheets','auditions','settings','blobs'];
+    }
+  }
+}
